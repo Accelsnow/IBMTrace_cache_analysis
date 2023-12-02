@@ -1,5 +1,4 @@
-from cache import BaseCache
-from mem_trace import Trace
+from cache import BaseCache, CacheRequest
 from collections import deque
 
 
@@ -11,16 +10,17 @@ class FIFOCache(BaseCache):
         self.name = "FIFOCache"
         self.queue = deque(maxlen=self.num_blocks)
 
-    def access(self, trace: Trace):
+    def access(self, cache_req: CacheRequest) -> None:
         self.accesses += 1
-        if trace.tag in self.queue:
+        if cache_req.tag in self.queue:
             self.hits += 1
         else:
             self.misses += 1
             assert len(self.queue) <= self.num_blocks
             if self.queue.maxlen == self.num_blocks:
                 self.evict()
-            self.queue.append(trace.tag)
+                assert len(self.queue) < self.num_blocks
+            self.queue.append(cache_req.tag)
 
     def evict(self) -> None:
         self.evicts += 1
