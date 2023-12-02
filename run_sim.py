@@ -41,7 +41,7 @@ def parse_cache_type(cache_type: str, cache_size: int, block_size: int, evict_si
 def get_file_paths(directory):
     paths = []
 
-    for root, directories, files in os.listdir(directory):
+    for root, directories, files in os.walk(directory):
         for filename in files:
             filepath = os.path.join(root, filename)
             paths.append(filepath)
