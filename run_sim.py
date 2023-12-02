@@ -9,7 +9,7 @@ parser.add_argument('-b', type=int, required=True)
 parser.add_argument('-f', type=str, required=True)
 parser.add_argument('-t', type=str, required=True)
 parser.add_argument('-e', type=float, default=0.01)
-parser.add_argument('--repeat')
+parser.add_argument('--repeat', action='store_true')
 
 
 def parse_cache_size(cache_size_str: str) -> int:
