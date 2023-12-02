@@ -4,6 +4,8 @@ from typing import List
 
 from cache import CacheRequest
 
+from mem_trace import AccessType
+
 import tarfile
 
 import os
@@ -16,49 +18,46 @@ class TraceParser:
 class IBMCOSTraceParser(TraceParser):
     def parse(self, trace_filename: str) -> List[CacheRequest]:
         
-        if os.path.isdir(trace_filename+'_files'):
-            tracesObjs = os.listdir(trace_filename+'_files')
-            for trace in tracesObjs:
-                trace = open(trace)
-                for line in trace:
-                    line = line.split()
-                    
-                    if len(line)!=6:
-                        if line[2] == "REST.PUT.OBJECT":
-                            tag = (int(line[2]), -1)
-                            tot_size = int(line[3])
-                            acc_start = 0
-                            acc_end = tot_size-1
-                            acc_type = AccessType.WRITE
-                        elif line[2] == "REST.COPY.OBJECT":
-                            tag = (int(line[2]), -1)
-                            tot_size = int(line[3])
-                            acc_start = 0
-                            acc_end = tot_size-1
-                            acc_type = AccessType.READ
-                        elif line[2] == "REST.DELETE.OBJECT":
-                            tag = (int(line[2]), -1)
-                            tot_size = int(line[3])
-                            acc_start = 0
-                            acc_end = tot_size-1
-                            acc_type = AccessType.DELETE
-                        else:
-                            tag = -int(line[2])
-                            tot_size = 4096
-                            acc_start = 0
-                            acc_end = 4095
-                            acc_type = AccessType.READ
-                    else:
-                        tag = int(line[2])
+        with open(trace_filename, "r") as trace: 
+            cache_requests = []
+            for line in trace:
+                line = line.split()
+                tags = []
+                if len(line)!=6:
+                    if line[2] == "REST.PUT.OBJECT":
+                        acc_type = AccessType.WRITE
                         tot_size = int(line[3])
-                        acc_start = int(line[4])
-                        acc_end = int(line[5])
+                        blk_num = tot_size//4096 + 1
+                        
+                        for i in range(blk_num):
+                            tag = (int(line[2]), i)
+                            tags.append(tag)
+                    elif line[2] == "REST.COPY.OBJECT":
+                        tot_size = int(line[3])
+                        blk_num = tot_size//4096 + 1
+                        for i in range(blk_num):
+                            tag = (int(line[2]), i)
+                            tags.append(tag)
                         acc_type = AccessType.READ
-                    trace = Trace(tag, tot_size, acc_start, acc_end, acc_type)
-                    tracesObjs.append(trace)
-        else:
-            tracesObjs = tarfile.open(trace_filename)
-            os.mkdir(trace_filename+'_files')
-            if 
-        
-        raise NotImplementedError
+                    elif line[2] == "REST.DELETE.OBJECT":
+                        tot_size = int(line[3])
+                        blk_num = tot_size//4096 + 1
+                        for i in range(blk_num):
+                            tag = (int(line[2]), i)
+                            tags.append(tag)
+                        acc_type = AccessType.DELETE
+                    else:
+                        tag = (-int(line[2]), 1)
+                        acc_type = AccessType.READ
+                else:
+                    acc_type = AccessType.READ
+                    begin_block = int(line[4])//4096
+                    end_block = int(line[5])//4096
+                    for i in range(begin_block, end_block+1):
+                        tag = (int(line[2]), i)
+                        tags.append(tag)          
+                
+                for tag in tags:
+                    cache_request = CacheRequest(tag, acc_type)
+                    cache_requests.append(cache_request)
+            return cache_requests
