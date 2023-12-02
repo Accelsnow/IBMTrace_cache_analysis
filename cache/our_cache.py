@@ -64,5 +64,6 @@ class OurCache(BaseCache):
             self.recent_evict_dict.pop(self.recent_evict_queue.popleft())
         assert len(self.recent_evict_dict) < self.evict_blocks
         self.recent_evict_dict[tag] = target[2]
+        self.recent_evict_queue.append(tag)
 
 
