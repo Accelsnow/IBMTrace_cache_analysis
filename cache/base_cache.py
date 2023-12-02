@@ -33,6 +33,9 @@ class BaseCache:
     def __str__(self):
         return f"{self.name} - hits: {self.hits}, misses: {self.misses}, evicts: {self.evicts}, accesses: {self.accesses}, hit_rate: {self.hit_rate()}, miss_rate: {self.miss_rate()}"
 
+    def print_stats(self) -> None:
+        print(str(self))
+
     def access(self, trace: Trace) -> None:
         raise NotImplementedError
 
