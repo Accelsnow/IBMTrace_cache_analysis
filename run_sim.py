@@ -87,7 +87,7 @@ def main():
             c.print_stats()
     elif mode == 2:
         print(f"Running predefined set of experiments. Ignoring -t {cache_type} and -f {filename} options.")
-        file_paths = get_file_paths("data")
+        file_paths = sorted(get_file_paths("data"))
 
         for file_path in file_paths:
             if file_path.count("IBMObjectStoreTrace") == 1:
