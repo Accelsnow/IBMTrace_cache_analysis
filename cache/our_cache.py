@@ -25,7 +25,7 @@ class OurCache(BaseCache):
     def __init__(self, size: int, block_size: int):
         super().__init__(size, block_size)
         self.name = "OurCache"
-        self.evict_blocks = self.num_blocks // 10
+        self.evict_blocks = 1000
         self.cache_blocks = self.num_blocks - self.evict_blocks
         self.cache_dict = {}
         self.cache_evict_dict = {}
