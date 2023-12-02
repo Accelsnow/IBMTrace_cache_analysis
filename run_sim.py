@@ -27,13 +27,13 @@ def parse_cache_size(cache_size_str: str) -> int:
         raise argparse.ArgumentTypeError(f"Invalid cache size: {cache_size_str}")
 
 
-def parse_cache_type(cache_type: str, cache_size: int, block_size: int, evict_size: float) -> BaseCache:
+def parse_cache_type(cache_type: str, cache_size: int, block_size: int, evict_size: float, filename: str) -> BaseCache:
     if cache_type == 'fifo':
-        return FIFOCache(cache_size, block_size)
+        return FIFOCache(cache_size, block_size, filename)
     elif cache_type == 'lru':
-        return LRUCache(cache_size, block_size)
+        return LRUCache(cache_size, block_size, filename)
     elif cache_type == 'our':
-        return OurCache(cache_size, block_size, evict_size)
+        return OurCache(cache_size, block_size, evict_size, filename)
     else:
         raise argparse.ArgumentTypeError(f"Invalid cache type: {cache_type}")
 
@@ -89,13 +89,13 @@ def main():
         print(f"Running predefined set of experiments. Ignoring -t {cache_type} and -f {filename} options.")
         file_paths = get_file_paths("data")
 
-        for file in file_paths:
-            if file.startswith("IBM"):
+        for file_path in file_paths:
+            if file_path.count("IBMObjectStoreTrace") == 1:
                 print("=============================")
-                print(f"Running experiments on {file}")
-                cache_reqs = ibm_parser.parse(file)
+                print(f"Running experiments on {file_path}")
+                cache_reqs = ibm_parser.parse(file_path)
                 for cache_type in ['fifo', 'lru', 'our']:
-                    c = parse_cache_type(cache_type, cache_size, block_size, evict_size)
+                    c = parse_cache_type(cache_type, cache_size, block_size, evict_size, file_path)
                     for req in tqdm(cache_reqs):
                         c.access(req)
 

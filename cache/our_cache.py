@@ -22,8 +22,8 @@ class OurCache(BaseCache):
     evict_blocks: int
     cache_blocks: int
 
-    def __init__(self, size: int, block_size: int, evict_blocks: Union[int, float]):
-        super().__init__(size, block_size)
+    def __init__(self, size: int, block_size: int, evict_blocks: Union[int, float], filename: str):
+        super().__init__(size, block_size, filename)
         self.name = "OurCache"
         if evict_blocks < 1:
             self.evict_blocks = int(evict_blocks * self.num_blocks)

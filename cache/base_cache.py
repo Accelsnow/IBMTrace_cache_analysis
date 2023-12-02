@@ -24,7 +24,6 @@ class BaseCache:
         self.num_blocks = size // block_size
         self.description = f"{size}/{block_size}, {self.num_blocks} blks, {filename}, "
 
-
     def hit_rate(self) -> float:
         assert self.hits + self.misses == self.accesses
         return self.hits / self.accesses

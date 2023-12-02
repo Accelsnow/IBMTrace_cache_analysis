@@ -8,8 +8,8 @@ class FIFOCache(BaseCache):
     queue: deque
     entry_set: set
 
-    def __init__(self, size: int, block_size: int):
-        super().__init__(size, block_size)
+    def __init__(self, size: int, block_size: int, filename: str):
+        super().__init__(size, block_size, filename)
         self.name = "FIFOCache"
         self.queue = deque(maxlen=self.num_blocks)
         self.entry_set = set()

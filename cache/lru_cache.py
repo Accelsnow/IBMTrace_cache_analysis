@@ -5,8 +5,8 @@ from collections import OrderedDict
 class LRUCache(BaseCache):
     entries: OrderedDict
 
-    def __init__(self, size: int, block_size: int):
-        super().__init__(size, block_size)
+    def __init__(self, size: int, block_size: int, filename: str):
+        super().__init__(size, block_size, filename)
         self.name = "LRUCache"
         self.entries = OrderedDict()
 
