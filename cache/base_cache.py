@@ -12,7 +12,7 @@ class BaseCache:
     block_size: int
     num_blocks: int
 
-    def __init__(self, size: int, block_size: int):
+    def __init__(self, size: int, block_size: int, filename: str):
         self.name = "BaseCache"
         self.hits = 0
         self.evicts = 0
@@ -22,7 +22,8 @@ class BaseCache:
         self.block_size = block_size
         assert size % block_size == 0
         self.num_blocks = size // block_size
-        self.description = f"{size}/{block_size}, {self.num_blocks} blks, "
+        self.description = f"{size}/{block_size}, {self.num_blocks} blks, {filename}, "
+
 
     def hit_rate(self) -> float:
         assert self.hits + self.misses == self.accesses
