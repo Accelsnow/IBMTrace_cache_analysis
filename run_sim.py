@@ -9,7 +9,7 @@ parser.add_argument('-b', type=int, required=True)
 parser.add_argument('-f', type=str, required=True)
 parser.add_argument('-t', type=str, required=True)
 parser.add_argument('-e', type=float, default=0.01)
-parser.add_argument('--repeat', action='store_true')
+parser.add_argument('-r', action='store_true', default=False)
 
 
 def parse_cache_size(cache_size_str: str) -> int:
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     filename = args.f
     cache_type = args.t
     evict_size = args.e
-    does_evict = args.repeat
+    repeat = args.r
 
     assert cache_size % block_size == 0
 
@@ -54,13 +54,7 @@ if __name__ == "__main__":
 
     c: BaseCache
 
-    if does_evict is None:
-        c = parse_cache_type(cache_type, cache_size, block_size, evict_size)
-        for req in tqdm(cache_reqs):
-            c.access(req)
-
-        c.print_stats()
-    else:
+    if repeat:
         assert cache_type == 'our'
         e_vals = [0.00001, 0.0001, 0.001, 0.01, 0.1, 100, 1000, 10000, 100000]
 
@@ -70,3 +64,9 @@ if __name__ == "__main__":
                 c.access(req)
 
             c.print_stats()
+    else:
+        c = parse_cache_type(cache_type, cache_size, block_size, evict_size)
+        for req in tqdm(cache_reqs):
+            c.access(req)
+
+        c.print_stats()
