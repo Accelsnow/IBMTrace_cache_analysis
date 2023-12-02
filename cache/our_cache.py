@@ -27,8 +27,12 @@ class OurCache(BaseCache):
         self.name = "OurCache"
         if evict_blocks < 1:
             self.evict_blocks = int(evict_blocks * self.num_blocks)
-        else:
+        elif evict_blocks < self.num_blocks:
             self.evict_blocks = evict_blocks
+        else:
+            print(f"WARNING: our cache evict block {evict_blocks} is larger than total cache blocks {self.num_blocks}! "
+                  f"Fallback to 1000.")
+            self.evict_blocks = 1000
         self.cache_blocks = self.num_blocks - self.evict_blocks
         self.cache_dict = {}
         self.cache_evict_dict = {}
