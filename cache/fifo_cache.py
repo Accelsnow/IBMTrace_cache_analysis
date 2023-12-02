@@ -17,6 +17,11 @@ class FIFOCache(BaseCache):
             self.hits += 1
         else:
             self.misses += 1
-            if len(self.queue) == self.num_blocks:
+            assert len(self.queue) <= self.num_blocks
+            if self.queue.maxlen == self.num_blocks:
                 self.evict()
-            self.queue.append(trace.block)
+            self.queue.append(trace.tag)
+
+    def evict(self) -> None:
+        self.evicts += 1
+        self.queue.popleft()

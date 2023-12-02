@@ -1,13 +1,17 @@
+from __future__ import annotations
+
 from enum import Enum
+from typing import Tuple
 
 
 class AccessType(Enum):
     READ = 0,
-    WRITE = 1
+    WRITE = 1,
+    DELETE = 2
 
 
 class Trace:
-    tag: int
+    tag: Tuple[int, int]
     tot_size: int
     acc_start: int
     acc_end: int
