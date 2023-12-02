@@ -25,21 +25,21 @@ class IBMCOSTraceParser(TraceParser):
                     if line[2] == "REST.PUT.OBJECT":
                         acc_type = AccessType.WRITE
                         tot_size = int(line[3])
-                        blk_num = tot_size // 4096 + 1
+                        blk_num = (tot_size - 1) // 4096 + 1
 
                         for i in range(blk_num):
                             tag = (int(line[2], 16), i)
                             tags.append(tag)
                     elif line[2] == "REST.COPY.OBJECT":
                         tot_size = int(line[3])
-                        blk_num = tot_size // 4096 + 1
+                        blk_num = (tot_size - 1) // 4096 + 1
                         for i in range(blk_num):
                             tag = (int(line[2], 16), i)
                             tags.append(tag)
                         acc_type = AccessType.READ
                     elif line[2] == "REST.DELETE.OBJECT":
                         tot_size = int(line[3])
-                        blk_num = tot_size // 4096 + 1
+                        blk_num = (tot_size - 1) // 4096 + 1
                         for i in range(blk_num):
                             tag = (int(line[2], 16), i)
                             tags.append(tag)
@@ -54,6 +54,27 @@ class IBMCOSTraceParser(TraceParser):
                     for i in range(begin_block, end_block + 1):
                         tag = (int(line[2], 16), i)
                         tags.append(tag)
+
+                for tag in tags:
+                    cache_requests.append(CacheRequest(tag, acc_type))
+            return cache_requests
+        
+class MSRTraceParser(TraceParser):
+    def parse(self, trace_filename: str) -> List[CacheRequest]:
+        with open(trace_filename, "r") as trace:
+            cache_requests = []
+            for line in tqdm(trace.readlines()):
+                acc_type: AccessType
+                line = line.split(',')
+                tags = []
+                blk_num = (int(5))//4096
+                if line[3] == "Write":
+                    acc_type = AccessType.WRITE
+                else:
+                    acc_type = AccessType.READ
+                for i in range(blk_num):
+                    tag = (int(line[0]), i)
+                    tags.append(tag) 
 
                 for tag in tags:
                     cache_requests.append(CacheRequest(tag, acc_type))
