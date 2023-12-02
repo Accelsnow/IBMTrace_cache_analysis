@@ -59,7 +59,7 @@ class IBMCOSTraceParser(TraceParser):
                     cache_requests.append(CacheRequest(tag, acc_type))
             return cache_requests
         
-Class MSRTraceParser(TraceParser):
+class MSRTraceParser(TraceParser):
     def parse(self, trace_filename: str) -> List[CacheRequest]:
         with open(trace_filename, "r") as trace:
             cache_requests = []
