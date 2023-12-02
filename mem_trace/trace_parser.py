@@ -2,19 +2,19 @@ from __future__ import annotations
 
 from typing import List
 
-from mem_trace import Trace
+from cache import CacheRequest
 
 import tarfile
 
 import os
 
 class TraceParser:
-    def parse(self, trace_filename: str) -> List[Trace]:
+    def parse(self, trace_filename: str) -> List[CacheRequest]:
         raise NotImplementedError
 
 
 class IBMCOSTraceParser(TraceParser):
-    def parse(self, trace_filename: str) -> List[Trace]:
+    def parse(self, trace_filename: str) -> List[CacheRequest]:
         
         if os.path.isdir(trace_filename+'_files'):
             tracesObjs = os.listdir(trace_filename+'_files')
