@@ -53,7 +53,7 @@ class OurCache(BaseCache):
 
             assert len(self.cache_dict) < self.cache_blocks
             self.cache_dict[cache_req.tag] = evict_weight
-            assert len(self.cache_evict_dict[evict_weight]) < self.evict_blocks
+            assert len(self.cache_evict_dict[evict_weight]) < self.cache_blocks
             self.cache_evict_dict[evict_weight].append(cache_req.tag)
 
     def our_evict(self) -> None:
