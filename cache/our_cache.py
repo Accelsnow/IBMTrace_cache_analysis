@@ -37,9 +37,9 @@ class OurCache(BaseCache):
         self.cache_dict = {}
         self.cache_evict_dict = {}
         for i in range(0, 256):
-            self.cache_evict_dict[i] = deque(maxlen=self.cache_blocks)
+            self.cache_evict_dict[i] = deque()
         self.recent_evict_dict = {}
-        self.recent_evict_queue = deque(maxlen=self.evict_blocks)
+        self.recent_evict_queue = deque()
         self.description += f"{self.evict_blocks} ev_blks, {self.cache_blocks} c_blks"
 
     def access(self, cache_req: CacheRequest) -> None:
@@ -61,8 +61,8 @@ class OurCache(BaseCache):
 
             assert len(self.cache_dict) < self.cache_blocks
             self.cache_dict[cache_req.tag] = evict_weight
-            assert len(self.cache_evict_dict[evict_weight]) < self.cache_blocks
             self.cache_evict_dict[evict_weight].append(cache_req.tag)
+            assert len(self.cache_evict_dict[evict_weight]) == len(self.cache_dict)
 
     def our_evict(self) -> None:
         self.evicts += 1
@@ -81,3 +81,4 @@ class OurCache(BaseCache):
             self.recent_evict_queue.append(target_tag)
 
         self.recent_evict_dict[target_tag] = target_weight
+        assert len(self.recent_evict_dict) == len(self.recent_evict_queue)
