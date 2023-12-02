@@ -31,4 +31,3 @@ class FIFOCache(BaseCache):
     def evict(self) -> None:
         self.evicts += 1
         self.hiting.remove(self.queue.popleft())
-        print("here")
