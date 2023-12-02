@@ -86,7 +86,7 @@ def main():
 
             c.print_stats()
     elif mode == 2:
-        print(f"Running predefined set of experiments. Ignoring -c {cache_type} and -f {filename} options.")
+        print(f"Running predefined set of experiments. Ignoring -t {cache_type} and -f {filename} options.")
         file_paths = get_file_paths("data")
 
         for file in file_paths:
