@@ -13,7 +13,7 @@ class LRUCache(BaseCache):
         self.accesses += 1
         if cache_request.tag in self.entries:
             self.hits += 1
-            self.entries.move_to_end(cache_request)
+            self.entries.move_to_end(cache_request.tag)
         else:
             self.misses += 1
             assert len(self.entries) <= self.num_blocks
