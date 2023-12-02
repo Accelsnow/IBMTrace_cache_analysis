@@ -64,10 +64,12 @@ class OurCache(BaseCache):
         assert target_weight <= 255
         target_tag = self.cache_evict_dict[target_weight].popleft()
         assert self.cache_dict.pop(target_tag) == target_weight
-        assert target_tag not in self.recent_evict_dict
+        # assert target_tag not in self.recent_evict_dict
 
         if len(self.recent_evict_dict) == self.evict_blocks:
             self.recent_evict_dict.pop(self.recent_evict_queue.popleft())
         assert len(self.recent_evict_dict) < self.evict_blocks
+        if target_tag not in self.recent_evict_dict:
+            self.recent_evict_queue.append(target_tag)
+
         self.recent_evict_dict[target_tag] = target_weight
-        self.recent_evict_queue.append(target_tag)
