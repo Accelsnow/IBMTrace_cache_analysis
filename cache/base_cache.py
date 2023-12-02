@@ -3,6 +3,7 @@ from cache import CacheRequest
 
 class BaseCache:
     name: str
+    description: str
     hits: int
     evicts: int
     misses: int
@@ -21,6 +22,7 @@ class BaseCache:
         self.block_size = block_size
         assert size % block_size == 0
         self.num_blocks = size // block_size
+        self.description = f"{size}/{block_size}, {self.num_blocks} blks, "
 
     def hit_rate(self) -> float:
         assert self.hits + self.misses == self.accesses
@@ -31,7 +33,7 @@ class BaseCache:
         return self.misses / self.accesses
 
     def __str__(self):
-        return f"{self.name} - hits: {self.hits}, misses: {self.misses}, evicts: {self.evicts}, accesses: {self.accesses}, hit_rate: {self.hit_rate()}, miss_rate: {self.miss_rate()}"
+        return f"{self.name} {self.description}\naccesses: {self.accesses}\nhits: {self.hits}\nmisses: {self.misses}\nevicts: {self.evicts}\nhit_rate: {self.hit_rate()}\nmiss_rate: {self.miss_rate()}\n\n"
 
     def print_stats(self) -> None:
         print(str(self))

@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Dict, Tuple, List, Deque
+from typing import Dict, Tuple, Union, Deque
 from cache import BaseCache, CacheRequest
 from collections import deque
 import bisect
@@ -22,10 +22,13 @@ class OurCache(BaseCache):
     evict_blocks: int
     cache_blocks: int
 
-    def __init__(self, size: int, block_size: int):
+    def __init__(self, size: int, block_size: int, evict_blocks: Union[int, float]):
         super().__init__(size, block_size)
         self.name = "OurCache"
-        self.evict_blocks = 1000
+        if evict_blocks < 1:
+            self.evict_blocks = int(evict_blocks * self.num_blocks)
+        else:
+            self.evict_blocks = evict_blocks
         self.cache_blocks = self.num_blocks - self.evict_blocks
         self.cache_dict = {}
         self.cache_evict_dict = {}
@@ -33,6 +36,7 @@ class OurCache(BaseCache):
             self.cache_evict_dict[i] = deque(maxlen=self.evict_blocks)
         self.recent_evict_dict = {}
         self.recent_evict_queue = deque(maxlen=self.evict_blocks)
+        self.description += f"{self.evict_blocks} ev_blks, {self.cache_blocks} c_blks"
 
     def access(self, cache_req: CacheRequest) -> None:
         self.accesses += 1

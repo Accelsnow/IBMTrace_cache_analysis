@@ -8,7 +8,7 @@ parser.add_argument('-c', type=str, required=True)
 parser.add_argument('-b', type=int, required=True)
 parser.add_argument('-f', type=str, required=True)
 parser.add_argument('-t', type=str, required=True)
-
+parser.add_argument('-e', type=float, default=0.01)
 
 def parse_cache_size(cache_size_str: str) -> int:
     try:
@@ -24,13 +24,13 @@ def parse_cache_size(cache_size_str: str) -> int:
         raise argparse.ArgumentTypeError(f"Invalid cache size: {cache_size_str}")
 
 
-def parse_cache_type(cache_type: str, cache_size: int, block_size: int) -> BaseCache:
+def parse_cache_type(cache_type: str, cache_size: int, block_size: int, evict_size: float) -> BaseCache:
     if cache_type == 'fifo':
         return FIFOCache(cache_size, block_size)
     elif cache_type == 'lru':
         return LRUCache(cache_size, block_size)
     elif cache_type == 'our':
-        return OurCache(cache_size, block_size)
+        return OurCache(cache_size, block_size, evict_size)
     else:
         raise argparse.ArgumentTypeError(f"Invalid cache type: {cache_type}")
 
@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     assert cache_size % block_size == 0
 
-    c = parse_cache_type(args.t, cache_size, block_size)
+    c = parse_cache_type(args.t, cache_size, block_size, args.e)
 
     ibm_parser = IBMCOSTraceParser()
     cache_reqs = ibm_parser.parse(filename)
