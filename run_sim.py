@@ -6,6 +6,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-c', type=str, required=True)
 parser.add_argument('-b', type=int, required=True)
+parser.add_argument('-f', type=str, required=True)
 
 
 def parse_cache_size(cache_size_str: str) -> int:
@@ -27,13 +28,14 @@ if __name__ == "__main__":
 
     cache_size = parse_cache_size(args.c)
     block_size = args.b
+    filename = args.f
 
     assert cache_size % block_size == 0
 
     c = FIFOCache(cache_size, block_size)
 
     ibm_parser = IBMCOSTraceParser()
-    cache_reqs = ibm_parser.parse("IBMObjectStoreSample")
+    cache_reqs = ibm_parser.parse(filename)
 
     for req in tqdm(cache_reqs):
         c.access(req)
