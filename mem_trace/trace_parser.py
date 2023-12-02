@@ -4,6 +4,8 @@ from typing import List
 
 from cache import *
 
+from tqdm import tqdm
+
 
 class TraceParser:
     def parse(self, trace_filename: str) -> List[CacheRequest]:
@@ -15,7 +17,7 @@ class IBMCOSTraceParser(TraceParser):
 
         with open(trace_filename, "r") as trace:
             cache_requests = []
-            for line in trace:
+            for line in tqdm(trace.readlines()):
                 line = line.split()
                 tags = []
                 acc_type: AccessType
