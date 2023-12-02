@@ -29,6 +29,8 @@ def parse_cache_type(cache_type: str, cache_size: int, block_size: int) -> BaseC
         return FIFOCache(cache_size, block_size)
     elif cache_type == 'lru':
         return LRUCache(cache_size, block_size)
+    elif cache_type == 'our':
+        return OurCache(cache_size, block_size)
     else:
         raise argparse.ArgumentTypeError(f"Invalid cache type: {cache_type}")
 

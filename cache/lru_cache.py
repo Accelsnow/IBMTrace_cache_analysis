@@ -7,6 +7,7 @@ class LRUCache(BaseCache):
 
     def __init__(self, size: int, block_size: int):
         super().__init__(size, block_size)
+        self.name = "LRUCache"
         self.entries = OrderedDict()
 
     def access(self, cache_request: CacheRequest) -> None:
