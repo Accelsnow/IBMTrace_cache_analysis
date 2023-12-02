@@ -1,4 +1,4 @@
-from mem_trace import Trace
+from cache import CacheRequest
 
 
 class BaseCache:
@@ -36,7 +36,7 @@ class BaseCache:
     def print_stats(self) -> None:
         print(str(self))
 
-    def access(self, trace: Trace) -> None:
+    def access(self, cache_request: CacheRequest) -> None:
         raise NotImplementedError
 
     def evict(self) -> None:

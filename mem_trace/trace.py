@@ -1,13 +1,7 @@
 from __future__ import annotations
 
-from enum import Enum
 from typing import Tuple
-
-
-class AccessType(Enum):
-    READ = 0,
-    WRITE = 1,
-    DELETE = 2
+from cache import AccessType
 
 
 class Trace:

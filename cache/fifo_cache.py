@@ -17,7 +17,7 @@ class FIFOCache(BaseCache):
         else:
             self.misses += 1
             assert len(self.queue) <= self.num_blocks
-            if self.queue.maxlen == self.num_blocks:
+            if len(self.queue) == self.num_blocks:
                 self.evict()
                 assert len(self.queue) < self.num_blocks
             self.queue.append(cache_req.tag)
