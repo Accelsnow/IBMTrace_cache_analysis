@@ -21,7 +21,7 @@ class TraceParser:
 class IBMCOSTraceParser(TraceParser):
     @staticmethod
     def _get_line_cache_reqs(line: str) -> List[CacheRequest]:
-        line = line.split(',')
+        line = line.split(' ')
         tags = []
         acc_type: AccessType
         if len(line) != 6:
