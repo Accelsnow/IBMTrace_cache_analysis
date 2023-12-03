@@ -86,18 +86,17 @@ def main():
 
             c.print_stats()
     elif mode == 2:
-        print(f"Running predefined set of experiments. Ignoring -t {cache_type} and -f {filename} options.")
+        print(f"Running predefined set of experiments. Ignoring -f {filename} options.")
         file_paths = sorted(get_file_paths("data"))
 
         for file_path in file_paths:
             if file_path.count("IBMObjectStoreTrace") == 1:
                 print("=============================")
                 print(f"Running experiments on {file_path}")
-                for cache_type in ['fifo', 'lru', 'our']:
-                    c = parse_cache_type(cache_type, cache_size, block_size, evict_size, file_path)
-                    # avoid memory overflow, use parse and run
-                    ibm_parser.parse_and_run(file_path, c)
-                    c.print_stats()
+                c = parse_cache_type(cache_type, cache_size, block_size, evict_size, file_path)
+                # avoid memory overflow, use parse and run
+                ibm_parser.parse_and_run(file_path, c)
+                c.print_stats()
                 print("=============================\n")
 
     else:
