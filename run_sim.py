@@ -67,7 +67,7 @@ def main():
 
     if mode == 0:
         c = parse_cache_type(cache_type, cache_size, block_size, evict_size)
-        cache_reqs = ibm_parser.parse(filename)
+        cache_reqs = ibm_parser.parse_all(filename)
         for req in tqdm(cache_reqs):
             c.access(req)
 
@@ -76,7 +76,7 @@ def main():
         assert cache_type == 'our'
         e_vals = [0.00001, 0.0001, 0.001, 0.01, 0.1, 100, 1000, 10000, 100000]
 
-        cache_reqs = ibm_parser.parse(filename)
+        cache_reqs = ibm_parser.parse_all(filename)
 
         for e in e_vals:
             c = parse_cache_type(cache_type, cache_size, block_size, e)
@@ -93,12 +93,10 @@ def main():
             if file_path.count("IBMObjectStoreTrace") == 1:
                 print("=============================")
                 print(f"Running experiments on {file_path}")
-                cache_reqs = ibm_parser.parse(file_path)
                 for cache_type in ['fifo', 'lru', 'our']:
                     c = parse_cache_type(cache_type, cache_size, block_size, evict_size, file_path)
-                    for req in tqdm(cache_reqs):
-                        c.access(req)
-
+                    # avoid memory overflow, use parse and run
+                    ibm_parser.parse_and_run(file_path, c)
                     c.print_stats()
                 print("=============================\n")
 
