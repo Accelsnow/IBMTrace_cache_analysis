@@ -64,10 +64,7 @@ class IBMCOSTraceParser(TraceParser):
 
     def parse_and_run(self, trace_filename: str, cache: BaseCache) -> None:
         with open(trace_filename, "r") as trace:
-            while True:
-                line = trace.readline()
-                if not line:
-                    break
+            for line in tqdm(trace.readlines()):
                 reqs = self._get_line_cache_reqs(line)
                 for req in reqs:
                     cache.access(req)
