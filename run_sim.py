@@ -66,8 +66,8 @@ def main():
     c: BaseCache
 
     if mode == 0:
-        c = parse_cache_type(cache_type, cache_size, block_size, evict_size)
-        cache_reqs = ibm_parser.parse_all(filename)
+        c = parse_cache_type(cache_type, cache_size, block_size, evict_size, filename)
+        cache_reqs = ibm_parser.parse_all(filename, block_size)
         for req in tqdm(cache_reqs):
             c.access(req)
 
@@ -76,10 +76,10 @@ def main():
         assert cache_type == 'our'
         e_vals = [0.00001, 0.0001, 0.001, 0.01, 0.1, 100, 1000, 10000, 100000]
 
-        cache_reqs = ibm_parser.parse_all(filename)
+        cache_reqs = ibm_parser.parse_all(filename, block_size)
 
         for e in e_vals:
-            c = parse_cache_type(cache_type, cache_size, block_size, e)
+            c = parse_cache_type(cache_type, cache_size, block_size, e, filename)
 
             for req in tqdm(cache_reqs):
                 c.access(req)
