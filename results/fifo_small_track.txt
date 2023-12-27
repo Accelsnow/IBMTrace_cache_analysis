@@ -1,0 +1,287 @@
+Running predefined set of experiments. Ignoring -f f options.
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace013Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace013Part0, 
+accesses: 6854671
+hits: 4405666
+misses: 2449005
+evicts: 0
+hit_rate: 0.6427246471785444
+miss_rate: 0.3572753528214556
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace014Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace014Part0, 
+accesses: 10049873
+hits: 51439
+misses: 9998434
+evicts: 7376994
+hit_rate: 0.005118373137650595
+miss_rate: 0.9948816268623494
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace016Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace016Part0, 
+accesses: 3379947
+hits: 3169880
+misses: 210067
+evicts: 0
+hit_rate: 0.9378490254432984
+miss_rate: 0.06215097455670163
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace017Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace017Part0, 
+accesses: 31981
+hits: 31971
+misses: 10
+evicts: 0
+hit_rate: 0.999687314342891
+miss_rate: 0.0003126856571089084
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace019Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace019Part0, 
+accesses: 4736105
+hits: 4666930
+misses: 69175
+evicts: 0
+hit_rate: 0.9853941160510589
+miss_rate: 0.014605883948941165
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace021Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace021Part0, 
+accesses: 1440206
+hits: 582042
+misses: 858164
+evicts: 0
+hit_rate: 0.4041380191444835
+miss_rate: 0.5958619808555164
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace035Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace035Part0, 
+accesses: 4851627
+hits: 4850286
+misses: 1341
+evicts: 0
+hit_rate: 0.999723597877578
+miss_rate: 0.0002764021224220246
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace037Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace037Part0, 
+accesses: 1897802
+hits: 1897636
+misses: 166
+evicts: 0
+hit_rate: 0.99991253039042
+miss_rate: 8.746960957992457e-05
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace039Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace039Part0, 
+accesses: 2180449
+hits: 2148802
+misses: 31647
+evicts: 0
+hit_rate: 0.9854860168708371
+miss_rate: 0.014513983129162846
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace040Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace040Part0, 
+accesses: 3732564
+hits: 3732547
+misses: 17
+evicts: 0
+hit_rate: 0.9999954454900171
+miss_rate: 4.554509982950058e-06
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace047Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace047Part0, 
+accesses: 7766864
+hits: 7489476
+misses: 277388
+evicts: 0
+hit_rate: 0.9642857142857143
+miss_rate: 0.03571428571428571
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace054Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace054Part0, 
+accesses: 1911531
+hits: 1424306
+misses: 487225
+evicts: 0
+hit_rate: 0.7451126871601873
+miss_rate: 0.2548873128398127
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace064Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace064Part0, 
+accesses: 3513392
+hits: 243559
+misses: 3269833
+evicts: 648393
+hit_rate: 0.06932303597207486
+miss_rate: 0.9306769640279251
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace073Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace073Part0, 
+accesses: 16519097
+hits: 16106322
+misses: 412775
+evicts: 0
+hit_rate: 0.9750122539991138
+miss_rate: 0.024987746000886126
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace077Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace077Part0, 
+accesses: 1285686
+hits: 854442
+misses: 431244
+evicts: 0
+hit_rate: 0.664580620773657
+miss_rate: 0.33541937922634296
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace084Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace084Part0, 
+accesses: 411167
+hits: 411166
+misses: 1
+evicts: 0
+hit_rate: 0.9999975678982019
+miss_rate: 2.4321017980528594e-06
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace086Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace086Part0, 
+accesses: 2676195
+hits: 2517583
+misses: 158612
+evicts: 0
+hit_rate: 0.9407322710041682
+miss_rate: 0.05926772899583177
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace087Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace087Part0, 
+accesses: 4060839
+hits: 3951872
+misses: 108967
+evicts: 0
+hit_rate: 0.9731663826120661
+miss_rate: 0.026833617387933873
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace088Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace088Part0, 
+accesses: 6250600
+hits: 6167010
+misses: 83590
+evicts: 0
+hit_rate: 0.9866268838191533
+miss_rate: 0.013373116180846639
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace090Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace090Part0, 
+accesses: 2510049
+hits: 2435879
+misses: 74170
+evicts: 0
+hit_rate: 0.970450776060547
+miss_rate: 0.029549223939452973
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace092Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace092Part0, 
+accesses: 9247386
+hits: 9134255
+misses: 113131
+evicts: 0
+hit_rate: 0.9877661644058116
+miss_rate: 0.012233835594188456
+
+
+=============================
+
+=============================
+Running experiments on data.nosync/IBMObjectStoreTrace094Part0
+FIFOCache 10737418240/4096, 2621440 blks, data.nosync/IBMObjectStoreTrace094Part0, 
+accesses: 598653
+hits: 441798
+misses: 156855
+evicts: 0
+hit_rate: 0.7379867803218225
+miss_rate: 0.26201321967817753
+
+
+=============================
+
