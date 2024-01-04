@@ -34,6 +34,8 @@ def parse_cache_type(cache_type: str, cache_size: int, block_size: int, evict_si
         return LRUCache(cache_size, block_size, filename)
     elif cache_type == 'our':
         return OurCache(cache_size, block_size, evict_size, filename)
+    elif cache_type == 'arc':
+        return ARCCache(cache_size, block_size, filename)
     else:
         raise argparse.ArgumentTypeError(f"Invalid cache type: {cache_type}")
 
@@ -43,7 +45,19 @@ def get_file_paths(directory):
 
     for root, directories, files in os.walk(directory):
         for filename in files:
+            if(not filename.endswith("Part0")):
+                continue
+            
             filepath = os.path.join(root, filename)
+            new_filename = filename[:-1] + str(int(filename[-1]) + 1)
+            filepaths = []
+            filepaths.append(filepath)
+            while(new_filename in files):
+                new_filepath = os.path.join(root, filename)
+                new_filename = new_filename[:-1] + str(int(new_filename[-1]) + 1)
+                filepaths.append(new_filepath)
+            if(len(filepaths) != 1):
+                paths.append(filepaths)
             paths.append(filepath)
 
     return paths
@@ -87,10 +101,19 @@ def main():
             c.print_stats()
     elif mode == 2:
         print(f"Running predefined set of experiments. Ignoring -f {filename} options.")
-        file_paths = sorted(get_file_paths("data"))
+        file_paths = sorted(get_file_paths("data"), key=lambda x: x[0] if isinstance(x, list) else x)
 
         for file_path in file_paths:
-            if file_path.count("IBMObjectStoreTrace") == 1:
+            if isinstance(file_path, list):
+                print("=============================")
+                print(f"Running experiments on {file_path[0][:-5]}")
+                c = parse_cache_type(cache_type, cache_size, block_size, evict_size, file_path[0])
+                # avoid memory overflow, use parse and run
+                for path in file_path:
+                    ibm_parser.parse_and_run(path, c)
+                c.print_stats()
+                print("=============================\n")
+            elif file_path.count("IBMObjectStoreTrace") == 1:
                 print("=============================")
                 print(f"Running experiments on {file_path}")
                 c = parse_cache_type(cache_type, cache_size, block_size, evict_size, file_path)
