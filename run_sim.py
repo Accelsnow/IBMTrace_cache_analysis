@@ -58,7 +58,8 @@ def get_file_paths(directory):
                 filepaths.append(new_filepath)
             if(len(filepaths) != 1):
                 paths.append(filepaths)
-            paths.append(filepath)
+            else:
+                paths.append(filepath)
 
     return paths
 
