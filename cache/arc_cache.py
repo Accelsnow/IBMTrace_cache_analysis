@@ -1,7 +1,7 @@
 from cache import BaseCache, CacheRequest
 from collections import OrderedDict
 
-class ARCache(BaseCache):
+class ARCCache(BaseCache):
     def __init__(self, size: int, block_size: int, filename: str):
         super().__init__(size, block_size, filename)
         self.name = "ARCache"
