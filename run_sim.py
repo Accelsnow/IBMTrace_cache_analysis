@@ -19,6 +19,8 @@ def parse_cache_size(cache_size_str: str) -> int:
             return int(cache_size_str[:-1]) * (1024 ** 2)
         elif cache_size_str.endswith("G"):
             return int(cache_size_str[:-1]) * (1024 ** 3)
+        elif cache_size_str.endswith("T"):
+            return int(cache_size_str[:-1]) * (1024 ** 4)
         elif cache_size_str.endswith("K"):
             return int(cache_size_str[:-1]) * (1024 ** 1)
         else:

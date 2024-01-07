@@ -16,7 +16,7 @@ class ARCCache(BaseCache):
             key, _ = self._t1.popitem(last=False)
             self._b1[key] = None
             self.evicts += 1
-        elif self.b2:
+        elif self._t2:
             key, _ = self._t2.popitem(last=False)
             self._b2[key] = None
             self.evicts += 1
