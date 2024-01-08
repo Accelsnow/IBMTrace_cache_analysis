@@ -38,6 +38,8 @@ def parse_cache_type(cache_type: str, cache_size: int, block_size: int, evict_si
         return OurCache(cache_size, block_size, evict_size, filename)
     elif cache_type == 'arc':
         return ARCCache(cache_size, block_size, filename)
+    elif cache_type == 'lec':
+        return LeCaRCache(cache_size, block_size, filename)
     else:
         raise argparse.ArgumentTypeError(f"Invalid cache type: {cache_type}")
 
