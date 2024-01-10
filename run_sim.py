@@ -127,18 +127,26 @@ def main():
                 c.print_stats()
                 print("=============================\n")
     elif mode == 3:
+        with open("./experiments/num_blocks.out", "r") as f:
+            trace_sizes = f.readlines()
+        trace_sizes = [int(x) for x in trace_sizes]
+        i = 0
         print(f"Running predefined set of experiments. Ignoring -f {filename} options.")
         file_paths = sorted(get_file_paths("data"), key=lambda x: x[0] if isinstance(x, list) else x)
-
+        # trace_size = 
         for file_path in file_paths:
+            if i == 12 or i== 75:
+                i+=1
+                continue
+            trace_size = trace_sizes[i]
+            if trace_size < 100:
+                i += 1
+                continue
             if isinstance(file_path, list):
                 print("=============================")
                 print(f"Running experiments on {file_path[0][:-5]}" + " with "+str(cache_size)+"% cache size")
-                trace_size = 0
-                counted = set()
-                for path in file_path:
-                    trace_size += ibm_parser.count_total_size(path, block_size, counted)
-                percentage_cache_size = cache_size*trace_size//100*block_size
+                # trace_size += ibm_parser.count_total_size(path, block_size, counted)
+                percentage_cache_size = cache_size*trace_size//100*block_size + block_size 
                 c = parse_cache_type(cache_type, percentage_cache_size, block_size, evict_size, file_path[0])
                 # avoid memory overflow, use parse and run
                 for path in file_path:
@@ -148,14 +156,14 @@ def main():
             elif file_path.count("IBMObjectStoreTrace") == 1:
                 print("=============================")
                 print(f"Running experiments on {file_path}" + " with "+str(cache_size) +"% cache size")
-                counted = set()
-                trace_size = ibm_parser.count_total_size(file_path, block_size, counted)
-                percentage_cache_size = cache_size*trace_size//100*block_size
+                # trace_size = ibm_parser.count_total_size(file_path, block_size, counted)
+                percentage_cache_size = cache_size*trace_size//100*block_size + block_size
                 c = parse_cache_type(cache_type, percentage_cache_size, block_size, evict_size, file_path)
                 # avoid memory overflow, use parse and run
                 ibm_parser.parse_and_run(file_path, c)
                 c.print_stats()
                 print("=============================\n")
+            i+=1
     elif mode==4:
         file_paths = sorted(get_file_paths("data"), key=lambda x: x[0] if isinstance(x, list) else x)
 
