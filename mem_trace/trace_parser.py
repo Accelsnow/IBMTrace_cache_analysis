@@ -62,6 +62,44 @@ class IBMCOSTraceParser(TraceParser):
             cache_requests.append(CacheRequest(tag, acc_type))
         return cache_requests
 
+    def count_total_size(self, trace_filename: str, block_size: int, alreadys: set) -> int:
+        with open(trace_filename, "r") as trace:
+            total_size = 0
+            for line in tqdm(trace.readlines()):
+                line = line.split(' ')
+                if len(line) != 6:
+                    if line[2] == "REST.PUT.OBJECT":
+                        tot_size = int(line[3])
+                        blk_num = (tot_size - 1) // block_size + 1
+                        if line[2] not in alreadys:
+                            total_size += blk_num
+                            alreadys.add(line[2])
+                    elif line[2] == "REST.COPY.OBJECT":
+                        tot_size = int(line[3])
+                        blk_num = (tot_size - 1) // block_size + 1
+                        if line[2] not in alreadys:
+                            total_size += blk_num
+                            alreadys.add(line[2])
+                    elif line[2] == "REST.DELETE.OBJECT":
+                        tot_size = int(line[3])
+                        blk_num = (tot_size - 1) // block_size + 1
+                        if line[2] not in alreadys:
+                            total_size += blk_num
+                            alreadys.add(line[2])
+                    else:
+                        if line[2] not in alreadys:
+                            total_size += 1
+                            alreadys.add(line[2])
+                else:
+                    begin_block = int(line[4]) // block_size
+                    end_block = int(line[5]) // block_size
+                    for i in range(begin_block, end_block + 1):
+                        tag = (int(line[2], 16), i)
+                        if tag not in alreadys:
+                            total_size += 1
+                            alreadys.add(tag)
+            return total_size
+    
     def parse_and_run(self, trace_filename: str, cache: BaseCache) -> None:
         with open(trace_filename, "r") as trace:
             for line in tqdm(trace.readlines()):

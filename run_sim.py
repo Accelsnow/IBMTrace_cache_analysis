@@ -78,7 +78,7 @@ def main():
     evict_size = args.e
     mode = args.m
 
-    assert cache_size % block_size == 0
+    # assert cache_size % block_size == 0
 
     ibm_parser = IBMCOSTraceParser()
 
@@ -126,7 +126,67 @@ def main():
                 ibm_parser.parse_and_run(file_path, c)
                 c.print_stats()
                 print("=============================\n")
+    elif mode == 3:
+        print(f"Running predefined set of experiments. Ignoring -f {filename} options.")
+        file_paths = sorted(get_file_paths("data"), key=lambda x: x[0] if isinstance(x, list) else x)
 
+        for file_path in file_paths:
+            if isinstance(file_path, list):
+                print("=============================")
+                print(f"Running experiments on {file_path[0][:-5]}" + " with "+str(cache_size)+"% cache size")
+                trace_size = 0
+                counted = set()
+                for path in file_path:
+                    trace_size += ibm_parser.count_total_size(path, block_size, counted)
+                percentage_cache_size = cache_size*trace_size//100*block_size
+                c = parse_cache_type(cache_type, percentage_cache_size, block_size, evict_size, file_path[0])
+                # avoid memory overflow, use parse and run
+                for path in file_path:
+                    ibm_parser.parse_and_run(path, c)
+                c.print_stats()
+                print("=============================\n")
+            elif file_path.count("IBMObjectStoreTrace") == 1:
+                print("=============================")
+                print(f"Running experiments on {file_path}" + " with "+str(cache_size) +"% cache size")
+                counted = set()
+                trace_size = ibm_parser.count_total_size(file_path, block_size, counted)
+                percentage_cache_size = cache_size*trace_size//100*block_size
+                c = parse_cache_type(cache_type, percentage_cache_size, block_size, evict_size, file_path)
+                # avoid memory overflow, use parse and run
+                ibm_parser.parse_and_run(file_path, c)
+                c.print_stats()
+                print("=============================\n")
+    elif mode==4:
+        file_paths = sorted(get_file_paths("data"), key=lambda x: x[0] if isinstance(x, list) else x)
+
+        for file_path in file_paths:
+            if isinstance(file_path, list):
+                # print("=============================")
+                # print(f"Running experiments on {file_path[0][:-5]}" + " with "+str(cache_size)+"% cache size")
+                trace_size = 0
+                counted = set()
+                for path in file_path:
+                    trace_size += ibm_parser.count_total_size(path, block_size, counted)
+                # percentage_cache_size = cache_size*trace_size//100*block_size
+                # c = parse_cache_type(cache_type, percentage_cache_size, block_size, evict_size, file_path[0])
+                # avoid memory overflow, use parse and run
+                print(trace_size)
+                # for path in file_path:
+                #     ibm_parser.parse_and_run(path, c)
+                # c.print_stats()
+                # print("=============================\n")
+            elif file_path.count("IBMObjectStoreTrace") == 1:
+                # print("=============================")
+                # print(f"Running experiments on {file_path}" + " with "+str(cache_size) +"% cache size")
+                counted = set()
+                trace_size = ibm_parser.count_total_size(file_path, block_size, counted)
+                print(trace_size)
+                # percentage_cache_size = cache_size*trace_size//100*block_size
+                # c = parse_cache_type(cache_type, percentage_cache_size, block_size, evict_size, file_path)
+                # # avoid memory overflow, use parse and run
+                # ibm_parser.parse_and_run(file_path, c)
+                # c.print_stats()
+                # print("=============================\n")
     else:
         raise argparse.ArgumentTypeError(f"Invalid mode: {mode}")
 
